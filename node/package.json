@@ -1,0 +1,14 @@
+{
+  "name": "delega-node-example",
+  "version": "1.0.0",
+  "description": "Delega API example — TypeScript",
+  "type": "module",
+  "scripts": {
+    "start": "npx tsx basic_tasks.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}
