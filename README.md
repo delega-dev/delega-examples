@@ -10,6 +10,7 @@ Each example is self-contained and defaults to the hosted API at `https://api.de
 |-----------|-----------|-------------|
 | [`python/`](python/) | Python (requests) | Raw API usage — create tasks, add comments, complete workflows |
 | [`node/`](node/) | Node.js / TypeScript | TypeScript API client with full task lifecycle |
+| [`webhooks/`](webhooks/) | Node.js / Python / Deno | Raw-body webhook verification examples with HMAC-SHA256 signature checks |
 | [`crewai/`](crewai/) | CrewAI | Multi-agent research crew with task delegation |
 | [`langchain/`](langchain/) | LangChain | Custom Delega tools for LangChain agents |
 | [`openai-agents/`](openai-agents/) | OpenAI Agents SDK | Planning agent with function-calling tools |
@@ -50,6 +51,10 @@ X-Agent-Key: dlg_your_key_here
 ```
 
 Examples expect `DELEGA_API_URL` to be the full API base, including the namespace prefix (`/v1` for hosted, `/api` for self-hosted).
+
+## Webhooks
+
+[`webhooks/`](webhooks/) contains verification servers for Node.js, Python, and Deno. Each example validates `X-Delega-Signature` by recomputing `HMAC-SHA256(secret, "{timestamp}.{raw_body}")`, enforcing a 5 minute timestamp window, and using timing-safe comparison.
 
 ## License
 
