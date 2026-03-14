@@ -3,7 +3,7 @@
  * Full task lifecycle with native fetch.
  */
 
-const API_BASE = process.env.DELEGA_API_URL ?? "https://api.delega.dev";
+const API_BASE = (process.env.DELEGA_API_URL ?? "https://api.delega.dev/v1").replace(/\/+$/, "");
 const API_KEY = process.env.DELEGA_API_KEY;
 
 if (!API_KEY) {
@@ -35,7 +35,7 @@ async function api<T = any>(
   path: string,
   body?: Record<string, unknown>
 ): Promise<T> {
-  const url = `${API_BASE}/v1${path}`;
+  const url = `${API_BASE}${path}`;
   const resp = await fetch(url, {
     method,
     headers: {
