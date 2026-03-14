@@ -7,6 +7,7 @@ A planning agent that breaks down goals into Delega tasks, executes them, and tr
 ```bash
 pip install -r requirements.txt
 export DELEGA_API_KEY="dlg_..."
+export DELEGA_API_URL="https://api.delega.dev/v1"   # or http://localhost:18890/api
 export OPENAI_API_KEY="sk-..."
 ```
 

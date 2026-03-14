@@ -7,6 +7,7 @@ Basic Delega API usage with `requests`. Creates tasks, adds comments, lists and 
 ```bash
 pip install -r requirements.txt
 export DELEGA_API_KEY="dlg_..."
+export DELEGA_API_URL="https://api.delega.dev/v1"   # or http://localhost:18890/api
 ```
 
 ## Run

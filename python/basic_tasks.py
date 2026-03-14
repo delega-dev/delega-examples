@@ -7,7 +7,7 @@ import os
 import sys
 import requests
 
-API_BASE = os.environ.get("DELEGA_API_URL", "https://api.delega.dev")
+API_BASE = os.environ.get("DELEGA_API_URL", "https://api.delega.dev/v1").rstrip("/")
 API_KEY = os.environ.get("DELEGA_API_KEY")
 
 if not API_KEY:
@@ -23,7 +23,7 @@ HEADERS = {
 
 def api(method: str, path: str, json=None):
     """Make an API request and return the parsed response."""
-    url = f"{API_BASE}/v1{path}"
+    url = f"{API_BASE}{path}"
     resp = requests.request(method, url, headers=HEADERS, json=json)
     resp.raise_for_status()
     return resp.json()
