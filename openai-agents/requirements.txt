@@ -1,2 +1,2 @@
-openai-agents==0.0.7
+openai-agents==0.15.1
 requests==2.33.0
