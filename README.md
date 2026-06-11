@@ -29,13 +29,7 @@ Each example is self-contained and defaults to the hosted API at `https://api.de
    export DELEGA_API_KEY="dlg_..."
    ```
 
-3. **If you're using self-hosted Delega, point the examples at `/api`:**
-   ```bash
-   export DELEGA_API_URL="http://localhost:18890/api"
-   # or: export DELEGA_API_URL="https://delega.yourcompany.com/api"
-   ```
-
-4. **Pick an example and run it** — each directory has its own README with setup instructions.
+3. **Pick an example and run it** — each directory has its own README with setup instructions.
 
 ## API Reference
 
@@ -50,7 +44,7 @@ All API requests use the `X-Agent-Key` header:
 X-Agent-Key: dlg_your_key_here
 ```
 
-Examples expect `DELEGA_API_URL` to be the full API base, including the namespace prefix (`/v1` for hosted, `/api` for self-hosted).
+Examples expect `DELEGA_API_URL` to be the full API base, including the `/v1` prefix (e.g. `https://api.delega.dev/v1`).
 
 ## Webhooks
 

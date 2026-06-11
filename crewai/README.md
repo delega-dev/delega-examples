@@ -7,7 +7,7 @@ A CrewAI crew that uses Delega for task management. A research agent investigate
 ```bash
 pip install -r requirements.txt
 export DELEGA_API_KEY="dlg_..."
-export DELEGA_API_URL="https://api.delega.dev/v1"   # or http://localhost:18890/api
+export DELEGA_API_URL="https://api.delega.dev/v1"   # optional — this is the default
 export OPENAI_API_KEY="sk-..."   # or configure your preferred LLM
 ```
 
