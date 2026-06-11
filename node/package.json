@@ -6,9 +6,8 @@
   "scripts": {
     "start": "npx tsx basic_tasks.ts"
   },
-  "dependencies": {},
   "devDependencies": {
     "tsx": "^4.22.4",
-    "typescript": "^5.4.0"
+    "typescript": "^6.0.3"
   }
 }
