@@ -9,6 +9,8 @@ Basic Delega API usage with `requests`.
 
 ## Setup
 
+Requires Python 3.10+.
+
 ```bash
 pip install -r requirements.txt
 export DELEGA_API_KEY="dlg_..."

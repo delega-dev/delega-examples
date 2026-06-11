@@ -8,7 +8,7 @@ Each example is self-contained and defaults to the hosted API at `https://api.de
 
 | Directory | Framework | Description |
 |-----------|-----------|-------------|
-| [`python/`](python/) | Python (requests) | Raw API usage — task lifecycle (`basic_tasks.py`) and a claim/heartbeat/release worker loop (`worker_loop.py`) |
+| [`python/`](python/) | Python 3.10+ (requests) | Raw API usage — task lifecycle (`basic_tasks.py`) and a claim/heartbeat/release worker loop (`worker_loop.py`) |
 | [`node/`](node/) | Node.js / TypeScript | TypeScript API client — task lifecycle (`basic_tasks.ts`) and a claim/heartbeat/release worker loop (`worker_loop.ts`) |
 | [`webhooks/`](webhooks/) | Node.js / Python / Deno | Raw-body webhook verification examples with HMAC-SHA256 signature checks |
 | [`crewai/`](crewai/) | CrewAI | Multi-agent research crew with task delegation |
