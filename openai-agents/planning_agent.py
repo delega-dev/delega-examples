@@ -110,6 +110,7 @@ def complete_task(task_id: str) -> str:
 
 planner = Agent(
     name="Planner",
+    model="gpt-4o-mini",
     instructions=(
         "You are a planning agent that breaks down goals into actionable tasks. "
         "When given a goal:\n"

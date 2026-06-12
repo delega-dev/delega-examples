@@ -11,6 +11,8 @@ export DELEGA_API_URL="https://api.delega.dev/v1"   # optional — this is the d
 export OPENAI_API_KEY="sk-..."
 ```
 
+Requires Python 3.10 or newer.
+
 ## Run
 
 ```bash

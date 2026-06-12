@@ -1,7 +1,7 @@
 """
 Delega + LangChain — Task Management Agent
 
-Custom tools that let a LangChain ReAct agent manage Delega tasks
+Custom tools that let a LangChain v1 agent manage Delega tasks
 through natural language.
 """
 
@@ -9,10 +9,8 @@ import os
 import sys
 import json
 import requests
-from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, create_react_agent
-from langchain.tools import StructuredTool
-from langchain_core.prompts import ChatPromptTemplate
+from langchain.agents import create_agent
+from langchain.tools import tool
 from pydantic import BaseModel, Field
 
 # ---------------------------------------------------------------------------
@@ -66,7 +64,9 @@ class CompleteTaskArgs(BaseModel):
 # Tool implementations
 # ---------------------------------------------------------------------------
 
+@tool(args_schema=CreateTaskArgs)
 def create_task(content: str, description: str = "", priority: int = 2, labels: str = "") -> str:
+    """Create a new Delega task and return its ID, content, and priority as JSON."""
     label_list = [l.strip() for l in labels.split(",") if l.strip()] if labels else []
     task = delega_api("POST", "/tasks", {
         "content": content,
@@ -77,7 +77,9 @@ def create_task(content: str, description: str = "", priority: int = 2, labels: 
     return json.dumps({"id": task["id"], "content": task["content"], "priority": task["priority"]})
 
 
+@tool(args_schema=ListTasksArgs)
 def list_tasks(search: str = "", priority: int = 0, completed: str = "") -> str:
+    """List Delega tasks with optional search, priority, and completion filters."""
     params = []
     if search:
         params.append(f"search={search}")
@@ -93,12 +95,16 @@ def list_tasks(search: str = "", priority: int = 0, completed: str = "") -> str:
     return json.dumps({"count": len(tasks), "tasks": summary})
 
 
+@tool(args_schema=AddCommentArgs)
 def add_comment(task_id: str, content: str) -> str:
-    comment = delega_api("POST", f"/tasks/{task_id}/comments", {"content": content})
+    """Add a progress note or comment to an existing Delega task."""
+    delega_api("POST", f"/tasks/{task_id}/comments", {"content": content})
     return f"Comment added to task {task_id}"
 
 
+@tool(args_schema=CompleteTaskArgs)
 def complete_task(task_id: str) -> str:
+    """Mark a Delega task complete."""
     delega_api("POST", f"/tasks/{task_id}/complete")
     return f"Task {task_id} marked complete"
 
@@ -107,57 +113,36 @@ def complete_task(task_id: str) -> str:
 # Build tools
 # ---------------------------------------------------------------------------
 
-tools = [
-    StructuredTool.from_function(
-        func=create_task,
-        name="create_task",
-        description="Create a new Delega task. Returns the task ID.",
-        args_schema=CreateTaskArgs,
-    ),
-    StructuredTool.from_function(
-        func=list_tasks,
-        name="list_tasks",
-        description="List Delega tasks with optional filters (search, priority, completed).",
-        args_schema=ListTasksArgs,
-    ),
-    StructuredTool.from_function(
-        func=add_comment,
-        name="add_comment",
-        description="Add a comment/note to an existing Delega task.",
-        args_schema=AddCommentArgs,
-    ),
-    StructuredTool.from_function(
-        func=complete_task,
-        name="complete_task",
-        description="Mark a Delega task as complete.",
-        args_schema=CompleteTaskArgs,
-    ),
-]
+tools = [create_task, list_tasks, add_comment, complete_task]
 
 # ---------------------------------------------------------------------------
 # Agent setup
 # ---------------------------------------------------------------------------
 
-PROMPT = ChatPromptTemplate.from_messages([
-    ("system",
-     "You are a task management assistant that uses Delega to track work. "
-     "You can create tasks, list them, add comments, and mark them complete. "
-     "Always confirm actions with the user and show task IDs.\n\n"
-     "Tools available:\n{tools}\n\nTool names: {tool_names}\n\n"
-     "Use this format:\n"
-     "Thought: what to do next\n"
-     "Action: tool_name\n"
-     "Action Input: {{\"arg\": \"value\"}}\n"
-     "Observation: tool result\n"
-     "... repeat ...\n"
-     "Thought: I have the answer\n"
-     "Final Answer: response to the user\n"),
-    ("human", "{input}\n\n{agent_scratchpad}"),
-])
+SYSTEM_PROMPT = (
+    "You are a task management assistant that uses Delega to track work. "
+    "You can create tasks, list them, add comments, and mark them complete. "
+    "Always confirm actions with the user and show task IDs."
+)
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-agent = create_react_agent(llm, tools, PROMPT)
-executor = AgentExecutor(agent=agent, tools=tools, verbose=True, handle_parsing_errors=True)
+agent = create_agent(
+    model="openai:gpt-4o-mini",
+    tools=tools,
+    system_prompt=SYSTEM_PROMPT,
+)
+
+
+def final_message_text(result: dict) -> str:
+    message = result["messages"][-1]
+    content = message.content
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "".join(
+            block.get("text", "") if isinstance(block, dict) else str(block)
+            for block in content
+        )
+    return str(content)
 
 # ---------------------------------------------------------------------------
 # Run
@@ -176,5 +161,5 @@ if __name__ == "__main__":
         if not user_input or user_input.lower() in ("quit", "exit", "q"):
             break
 
-        result = executor.invoke({"input": user_input})
-        print(f"\nAgent: {result['output']}\n")
+        result = agent.invoke({"messages": [{"role": "user", "content": user_input}]})
+        print(f"\nAgent: {final_message_text(result)}\n")

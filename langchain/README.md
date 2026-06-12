@@ -11,6 +11,8 @@ export DELEGA_API_URL="https://api.delega.dev/v1"   # optional — this is the d
 export OPENAI_API_KEY="sk-..."   # or configure your preferred LLM
 ```
 
+Requires Python 3.10 or newer.
+
 ## Run
 
 ```bash
@@ -20,7 +22,7 @@ python task_agent.py
 ## What it does
 
 1. Defines four LangChain tools: `create_task`, `list_tasks`, `add_comment`, `complete_task`
-2. Creates a ReAct agent with access to all tools
+2. Creates a LangChain v1 agent with access to all tools
 3. Runs a planning conversation where the agent manages tasks autonomously
 4. All task state is persisted in Delega
 
