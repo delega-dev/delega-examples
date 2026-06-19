@@ -17,11 +17,13 @@ Requires Python 3.10 or newer.
 
 ```bash
 python planning_agent.py
+# or pass a custom goal:
+python planning_agent.py "Plan a developer docs launch"
 ```
 
 ## What it does
 
-1. Takes a high-level goal as input
+1. Takes a high-level goal from CLI arguments, or uses the built-in launch-planning goal when none is provided
 2. Breaks it down into prioritized subtasks in Delega
 3. "Executes" each task (simulated) and adds progress comments
 4. Completes tasks as they finish
