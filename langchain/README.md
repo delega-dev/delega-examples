@@ -1,6 +1,6 @@
 # LangChain — Delega Tool Integration
 
-Custom LangChain tools that let any LangChain agent create, search, update, and complete Delega tasks through natural language.
+Custom LangChain tools that let a LangChain v1 agent create, list, comment on, and complete Delega tasks through natural language.
 
 ## Setup
 
@@ -23,7 +23,7 @@ python task_agent.py
 
 1. Defines four LangChain tools: `create_task`, `list_tasks`, `add_comment`, `complete_task`
 2. Creates a LangChain v1 agent with access to all tools
-3. Runs a planning conversation where the agent manages tasks autonomously
+3. Starts an interactive REPL where you ask the agent to manage tasks
 4. All task state is persisted in Delega
 
 ## Tools
