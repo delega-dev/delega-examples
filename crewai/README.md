@@ -21,8 +21,8 @@ python research_crew.py
 
 1. Creates a parent research task in Delega
 2. Research agent investigates the topic and logs findings as comments
-3. Writer agent creates a summary task delegated from the parent
-4. Both agents update task status as they work
+3. Research agent delegates a summary task from the parent
+4. Agents log progress as comments and complete tasks as work finishes
 5. Final output is tracked in Delega with full delegation chain
 
 ## Architecture
