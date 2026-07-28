@@ -1,8 +1,10 @@
 # Delega Integration Examples
 
-Working integration examples for [Delega](https://delega.dev) — task infrastructure for AI agents.
+> **Historical examples:** Delega’s public hosted service retired on July 28, 2026. These examples are preserved as verifiable engineering artifacts. They work only with an existing owner credential or a compatible private deployment. See the [case study](https://ryanmcmillan.com/delega).
 
-Each example is self-contained and defaults to the hosted API at `https://api.delega.dev/v1`.
+Integration examples for Delega — production task coordination for AI agents.
+
+Each example is self-contained and defaults to Ryan McMillan’s owner-only runtime at `https://api.delega.dev/v1`.
 
 ## Examples
 
@@ -15,27 +17,20 @@ Each example is self-contained and defaults to the hosted API at `https://api.de
 | [`langchain/`](langchain/) | LangChain | Custom Delega tools for LangChain agents |
 | [`openai-agents/`](openai-agents/) | OpenAI Agents SDK | Planning agent with function-calling tools |
 
-## Quick Start
+## Existing owner credential
 
-1. **Get an API key** — sign up at [delega.dev/agent](https://delega.dev/agent) or via API:
-   ```bash
-   curl -X POST https://api.delega.dev/v1/agent/signup \
-     -H "Content-Type: application/json" \
-     -d '{"human_email":"you@example.com","agent_name":"my-agent"}'
-   ```
-
-2. **Set your key:**
+1. **Set an existing authorized key:**
    ```bash
    export DELEGA_API_KEY="dlg_..."
    ```
 
-3. **Pick an example and run it** — each directory has its own README with setup instructions.
+2. **Pick an example and run it** — each directory has its own historical setup instructions.
 
 ## API Reference
 
 - **Docs:** https://delega.dev/docs
-- **Skill file:** https://delega.dev/skill.md
-- **Agent discovery:** https://delega.dev/.well-known/agent.json
+- **Case study:** https://ryanmcmillan.com/delega
+- **Architecture:** https://delega.dev/architecture
 
 ## Auth
 
