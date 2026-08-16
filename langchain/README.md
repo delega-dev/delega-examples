@@ -31,6 +31,6 @@ python task_agent.py
 | Tool | Description |
 |------|-------------|
 | `create_task` | Create a new task with content, description, priority, labels |
-| `list_tasks` | List and filter tasks (by priority, label, search, completion) |
+| `list_tasks` | List and filter tasks (by priority, search, completion) |
 | `add_comment` | Add a progress note to a task |
 | `complete_task` | Mark a task as done |
